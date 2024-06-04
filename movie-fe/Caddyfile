@@ -24,7 +24,7 @@
 	respond /health 200
 
 	# serve from the 'build' folder (react-scripts builds into the 'build' folder)
-	root * build
+	root * dist
 
 	# enable gzipping responses
 	encode gzip
