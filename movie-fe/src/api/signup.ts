@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { server } from ".";
+import { server, setAuthToken } from ".";
 
 interface Response {}
 interface Request {
@@ -9,6 +9,7 @@ interface Request {
 }
 
 export const signup = async (request: Request) => {
+  setAuthToken("");
   const response = server.post<Request, AxiosResponse<Response>>(
     "/auth/signup",
     request

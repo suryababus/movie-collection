@@ -29,6 +29,7 @@ import image from "@/assets/movie-collage-bg.jpeg";
 import { Checkbox } from "@/components/ui/checkbox";
 import Loading from "@/components/blocks/loading";
 import ErrorComponent from "@/components/blocks/error";
+import NoResult from "@/components/blocks/no-result";
 
 export const Route = createFileRoute("/_app_layout/app/my_collections")({
   component: HomeScreen,
@@ -77,6 +78,8 @@ function HomeScreen() {
         <div className="text-3xl">My Collections</div>
         <AddNewMovieCollection />
       </div>
+
+      {!loading && !data.length && <NoResult />}
       <div className="flex flex-row gap-4 w-full flex-wrap">
         {data.map((item) => (
           <Card

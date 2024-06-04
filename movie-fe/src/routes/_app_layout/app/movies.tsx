@@ -17,6 +17,7 @@ function Movies() {
   const [loading, setLoading] = useState(false);
 
   const fetchMovies = async (key: string) => {
+    if (!key) return;
     setLoading(true);
     setMovies(undefined);
     const resp = await searchMovie(key);

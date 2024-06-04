@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { debounce } from "@/lib/utils";
 // import { debounce } from "@/lib/utils";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { Search } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 export const Route = createFileRoute("/_app_layout/app/collection/$id")({
@@ -27,14 +28,17 @@ function CollectionDetails() {
   const collectionId = Route.useParams().id;
   const [collection, setCollection] = useState<CollectionResponse | null>(null);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchCollection();
   }, []);
 
   const fetchCollection = async () => {
+    setLoading(true);
     const _collection = await getCollection(collectionId);
     setCollection(_collection.data ?? null);
+    setLoading(false);
   };
 
   const onMovieClick = async (imbdId: string) => {
@@ -43,6 +47,13 @@ function CollectionDetails() {
       params: { id: imbdId },
     });
   };
+
+  if (loading)
+    return (
+      <div className="flex flex-1 w-full m-4">
+        <Loading />
+      </div>
+    );
 
   if (!collection)
     return (
@@ -99,6 +110,7 @@ function MoviesSearch() {
   const [loading, setLoading] = useState(false);
 
   const fetchMovies = async (key: string) => {
+    if (!key) return;
     setLoading(true);
     const resp = await searchMovie(key);
     console.log(resp);
@@ -128,12 +140,16 @@ function MoviesSearch() {
 
   return (
     <div className="flex flex-col w-full h-full flex-1 overflow-scroll pl-1">
-      <p className="mb-1 mt-4">Search for movie</p>
-      <Input
-        className="focus:border-0 max-w-96"
-        onChange={(e) => setSearchKey(e.target.value)}
-        value={searchKey}
-      />
+      <div className="relative m-2 mt-4 mb-4">
+        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+        <Input
+          type="search"
+          placeholder="Search movies..."
+          className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
+          onChange={(e) => setSearchKey(e.target.value)}
+          value={searchKey}
+        />
+      </div>
       {loading && (
         <div className="m-4">
           <Loading />

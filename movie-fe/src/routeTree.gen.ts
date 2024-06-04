@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as AuthlayoutImport } from './routes/_auth_layout'
 import { Route as ApplayoutImport } from './routes/_app_layout'
+import { Route as IndexImport } from './routes/index'
 import { Route as AuthlayoutAuthSignupImport } from './routes/_auth_layout/auth/signup'
 import { Route as AuthlayoutAuthLoginImport } from './routes/_auth_layout/auth/login'
 import { Route as ApplayoutAppMycollectionsImport } from './routes/_app_layout/app/my_collections'
@@ -30,6 +31,11 @@ const AuthlayoutRoute = AuthlayoutImport.update({
 
 const ApplayoutRoute = ApplayoutImport.update({
   id: '/_app_layout',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const IndexRoute = IndexImport.update({
+  path: '/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -73,6 +79,13 @@ const ApplayoutAppCollectionIdRoute = ApplayoutAppCollectionIdImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
     '/_app_layout': {
       id: '/_app_layout'
       path: ''
@@ -142,6 +155,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
+  IndexRoute,
   ApplayoutRoute: ApplayoutRoute.addChildren({
     ApplayoutAppMoviesRoute,
     ApplayoutAppMycollectionsRoute,
@@ -163,9 +177,13 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/",
         "/_app_layout",
         "/_auth_layout"
       ]
+    },
+    "/": {
+      "filePath": "index.tsx"
     },
     "/_app_layout": {
       "filePath": "_app_layout.tsx",

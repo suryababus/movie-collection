@@ -1,14 +1,14 @@
 import axios from "axios";
 
 export const server = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://movie-collection-production.up.railway.app",
   timeout: 60000,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-const getAuthToken = () => {
+export const getAuthToken = () => {
   const token = localStorage.getItem("token") || "";
   setAuthToken(token);
   return token;
@@ -19,6 +19,8 @@ export const setAuthToken = (token: string) => {
   if (token && token !== "undefined") {
     console.log("set token", token);
     server.defaults.headers.common["Authorization"] = "Bearer " + token;
+  } else {
+    server.defaults.headers.common["Authorization"] = "";
   }
 };
 
