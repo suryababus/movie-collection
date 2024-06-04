@@ -18,15 +18,14 @@ public class MovieService {
     @Value("${ombd.access.key}")
     private String secretKey;
 
-    private String url = "http://www.omdbapi.com/?apikey=";
+    private String _url = "http://www.omdbapi.com/?apikey=";
 
     public MovieService() {
     }
 
     public OmbdMovieResponseDto getMovie(String omdbId) {
         try {
-            URI uri = URI.create(url + secretKey + "&i=" + omdbId);
-            URL url = URL.of(uri, null);
+            URL url = new URL(_url + secretKey + "&i=" + omdbId);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             BufferedReader in = new BufferedReader(
@@ -52,8 +51,7 @@ public class MovieService {
 
     public OmdbSearchResponseDto searchMovie(String name) {
         try {
-            URI uri = URI.create(url + secretKey + "&s=" + name);
-            URL url = URL.of(uri, null);
+            URL url = new URL(_url + secretKey + "&s=" + name);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             BufferedReader in = new BufferedReader(
