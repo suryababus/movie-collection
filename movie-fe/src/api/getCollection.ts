@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { server } from ".";
 
 export interface CollectionResponse {

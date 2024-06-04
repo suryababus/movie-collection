@@ -18,7 +18,7 @@ import { debounce } from "@/lib/utils";
 // import { debounce } from "@/lib/utils";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { Search } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const Route = createFileRoute("/_app_layout/app/collection/$id")({
   component: CollectionDetails,

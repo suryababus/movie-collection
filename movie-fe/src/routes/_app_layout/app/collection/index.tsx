@@ -1,5 +1,5 @@
 import { createCollection } from "@/api/createCollection";
-import { MyCollectionResponse, myCollections } from "@/api/myCollections";
+import { MyCollectionResponse } from "@/api/myCollections";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
